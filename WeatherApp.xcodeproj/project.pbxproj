@@ -13,6 +13,8 @@
 		5C583D2826637C20009926FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C583D2626637C20009926FC /* Main.storyboard */; };
 		5C583D2A26637C21009926FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C583D2926637C21009926FC /* Assets.xcassets */; };
 		5C583D2D26637C21009926FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C583D2B26637C21009926FC /* LaunchScreen.storyboard */; };
+		5C583D38266385EA009926FC /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C583D37266385EA009926FC /* WeatherModel.swift */; };
+		5C583D422663E6B0009926FC /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C583D412663E6B0009926FC /* WeatherData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		5C583D2926637C21009926FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5C583D2C26637C21009926FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5C583D2E26637C21009926FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C583D37266385EA009926FC /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		5C583D412663E6B0009926FC /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +67,8 @@
 				5C583D2926637C21009926FC /* Assets.xcassets */,
 				5C583D2B26637C21009926FC /* LaunchScreen.storyboard */,
 				5C583D2E26637C21009926FC /* Info.plist */,
+				5C583D37266385EA009926FC /* WeatherModel.swift */,
+				5C583D412663E6B0009926FC /* WeatherData.swift */,
 			);
 			path = WeatherApp;
 			sourceTree = "<group>";
@@ -150,7 +156,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "
+";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -160,7 +167,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C583D2526637C20009926FC /* ViewController.swift in Sources */,
+				5C583D422663E6B0009926FC /* WeatherData.swift in Sources */,
 				5C583D2126637C20009926FC /* AppDelegate.swift in Sources */,
+				5C583D38266385EA009926FC /* WeatherModel.swift in Sources */,
 				5C583D2326637C20009926FC /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
