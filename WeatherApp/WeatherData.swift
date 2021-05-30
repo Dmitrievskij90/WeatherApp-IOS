@@ -23,7 +23,6 @@ struct List: Codable {
 
 struct Main: Codable {
     let temp: Double
-    let feels_like: Double
     let humidity: Int
 }
 
