@@ -8,6 +8,7 @@
 import UIKit
 
 class ViewController: UIViewController {
+    private var weatherManager = WeatherManager()
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -20,11 +21,14 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        weatherManager.delegate = self
         searchTextField.delegate = self
 
     }
+    
     @IBAction private func locationButtonPressed(_ sender: UIButton) {
     }
+
     @IBAction private func searchButtonPressed(_ sender: UIButton) {
         searchTextField.endEditing(true)
     }
@@ -60,6 +64,26 @@ extension ViewController: UITextFieldDelegate {
             return false
         }
     }
+
+}
+
+extension ViewController: WeatherManagerDelegate {
+    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
+        DispatchQueue.main.async {
+            self.temperatureLabel.text = weather.temperatureString
+            self.cityLabel.text = weather.cityName
+            self.descriptionLabel.text = weather.description
+            self.temperatureLabel.text = weather.temperatureString
+            self.humidityLabel.text = (weather.humidityString)
+            self.windLabel.text = weather.windSpeedString
+            self.conditionImageVIew.image = UIImage(systemName: weather.conditionName)
+        }
+    }
+
+    func didFailWithError(error: Error) {
+        print(error)
+    }
+
 
 }
 
