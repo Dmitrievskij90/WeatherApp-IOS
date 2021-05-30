@@ -11,13 +11,21 @@ struct WeatherModel {
     let conditionID: Int
     let cityName: String
     let temperature: Double
-    let date: Int
+    let date: String
     let humidity: Int
     let windSpeed: Double
     let description: String
 
     var temperatureString: String {
         return String(format: "%.1f", temperature)
+    }
+
+    var humidityString: String {
+        return "Humidity: \(humidity) %"
+    }
+
+    var windSpeedString: String {
+        return String("Wind: \(windSpeed) m/s")
     }
 
     var conditionName: String {
