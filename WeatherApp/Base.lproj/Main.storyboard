@@ -79,6 +79,9 @@
                                                     <imageReference key="image" image="ic_location" symbolScale="large" renderingMode="original"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="ultraLight"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="locationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="63X-Wl-nMR"/>
+                                                </connections>
                                             </button>
                                             <textField opaque="NO" alpha="0.55000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MgQ-PY-XZC">
                                                 <rect key="frame" x="55" y="0.0" width="284" height="50"/>
@@ -96,6 +99,9 @@
                                                     <imageReference key="image" image="ic_magnifier" symbolScale="large"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="medium"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="searchButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WkE-Wl-Tpx"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -170,10 +176,20 @@
                             <constraint firstAttribute="trailing" secondItem="Ddx-BB-gI5" secondAttribute="trailing" id="zMU-7h-CVM"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="cityLabel" destination="HbT-LW-HW1" id="iKm-PI-AbM"/>
+                        <outlet property="conditionImageVIew" destination="80a-ng-nrv" id="ZNE-R9-5Zw"/>
+                        <outlet property="descriptionLabel" destination="33s-uB-XEs" id="POr-oC-xIA"/>
+                        <outlet property="humidityLabel" destination="tQF-6l-3kc" id="GBl-DB-Mjo"/>
+                        <outlet property="searchTextField" destination="MgQ-PY-XZC" id="NNv-Td-CTt"/>
+                        <outlet property="temperatureLabel" destination="WCj-iU-IJS" id="LEZ-Uv-0p8"/>
+                        <outlet property="weatherTableView" destination="Gip-hV-kfQ" id="2Jq-fI-T8r"/>
+                        <outlet property="windLabel" destination="UeH-64-bvC" id="UZ1-gB-yj5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="111.59420289855073" y="73.660714285714278"/>
+            <point key="canvasLocation" x="-57" y="52"/>
         </scene>
     </scenes>
     <resources>
