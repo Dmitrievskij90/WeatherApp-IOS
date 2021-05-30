@@ -16,6 +16,8 @@
 		5C583D38266385EA009926FC /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C583D37266385EA009926FC /* WeatherModel.swift */; };
 		5C583D422663E6B0009926FC /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C583D412663E6B0009926FC /* WeatherData.swift */; };
 		5C583D452663EE11009926FC /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C583D442663EE11009926FC /* WeatherManager.swift */; };
+		5C583D4A2663FABF009926FC /* HourlyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C583D482663FABF009926FC /* HourlyTableViewCell.swift */; };
+		5C583D4B2663FABF009926FC /* HourlyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C583D492663FABF009926FC /* HourlyTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		5C583D37266385EA009926FC /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		5C583D412663E6B0009926FC /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		5C583D442663EE11009926FC /* WeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherManager.swift; sourceTree = "<group>"; };
+		5C583D482663FABF009926FC /* HourlyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyTableViewCell.swift; sourceTree = "<group>"; };
+		5C583D492663FABF009926FC /* HourlyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HourlyTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,8 @@
 				5C583D37266385EA009926FC /* WeatherModel.swift */,
 				5C583D412663E6B0009926FC /* WeatherData.swift */,
 				5C583D442663EE11009926FC /* WeatherManager.swift */,
+				5C583D482663FABF009926FC /* HourlyTableViewCell.swift */,
+				5C583D492663FABF009926FC /* HourlyTableViewCell.xib */,
 			);
 			path = WeatherApp;
 			sourceTree = "<group>";
@@ -136,6 +142,7 @@
 			files = (
 				5C583D2D26637C21009926FC /* LaunchScreen.storyboard in Resources */,
 				5C583D2A26637C21009926FC /* Assets.xcassets in Resources */,
+				5C583D4B2663FABF009926FC /* HourlyTableViewCell.xib in Resources */,
 				5C583D2826637C20009926FC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -174,6 +181,7 @@
 				5C583D422663E6B0009926FC /* WeatherData.swift in Sources */,
 				5C583D2126637C20009926FC /* AppDelegate.swift in Sources */,
 				5C583D38266385EA009926FC /* WeatherModel.swift in Sources */,
+				5C583D4A2663FABF009926FC /* HourlyTableViewCell.swift in Sources */,
 				5C583D2326637C20009926FC /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
