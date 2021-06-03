@@ -9,7 +9,7 @@
 import UIKit
 
 protocol WeatherManagerDelegate {
-    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel)
+    func didUpdateWeather(weather: WeatherModel)
 
     func didFailWithError(error: Error)
 }
@@ -39,7 +39,7 @@ struct WeatherManager {
                     if let safeData = data {
 
                         if let weather = self.parseJSON(safeData) {
-                            self.delegate?.didUpdateWeather(self, weather: weather)
+                            self.delegate?.didUpdateWeather(weather: weather)
                         }
                     }
                 }
@@ -60,8 +60,9 @@ struct WeatherManager {
             let date = decodedData.list[0].dt
             let id = decodedData.list[0].weather[0].id
             let description = decodedData.list[0].weather[0].description
+            let list = decodedData.list
 
-            let weather = WeatherModel(conditionID: id, cityName: cityName, temperature: temp, date: getCurrentDate(date), humidity: humidity, windSpeed: speed, description: description)
+            let weather = WeatherModel(conditionID: id, cityName: cityName, temperature: temp, date: getCurrentDate(date), humidity: humidity, windSpeed: speed, description: description, weatherList: list)
             return weather
         } catch {
             delegate?.didFailWithError(error: error)
