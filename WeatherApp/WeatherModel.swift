@@ -15,6 +15,7 @@ struct WeatherModel {
     let humidity: Int
     let windSpeed: Double
     let description: String
+    let weatherList: [List]
 
     var temperatureString: String {
         return String(format: "%.1f", temperature)
