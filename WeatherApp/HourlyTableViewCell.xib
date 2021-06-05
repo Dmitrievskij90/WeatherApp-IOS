@@ -23,7 +23,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F7b-Jz-e87">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_cloudy" translatesAutoresizingMaskIntoConstraints="NO" id="F7b-Jz-e87">
                         <rect key="frame" x="179" y="0.0" width="138" height="98"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
@@ -46,4 +46,7 @@
             <point key="canvasLocation" x="242.0289855072464" y="93.75"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="ic_cloudy" width="365.5" height="255"/>
+    </resources>
 </document>
