@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import CoreLocation
 
 class ViewController: UIViewController {
     private var weatherManager = WeatherManager()
+    private let locationManager = CLLocationManager()
     private var dataSourse = [List]()
 
     @IBOutlet weak var searchTextField: UITextField!
@@ -27,10 +29,20 @@ class ViewController: UIViewController {
         weatherTableView.delegate = self
         weatherTableView.dataSource = self
 
+        //нужно устанавливать раньше requestWhenInUseAuthorization и requestLocation иначе будет ошибка
+        locationManager.delegate = self
+
+        //данным способом мы запрашиваем разрешение на отслеживание локации пользователя. Так же в файле info.plist нужно добавить свойство "Privacy When In Use Usage Description" и прописать в валью сообщение
+        locationManager.requestWhenInUseAuthorization()
+
+    // так мы получаем локацию пользователя. Чтобы всега обновлять локацию пользователя (к примеру когда он движется на машине или бежит) нужно использовать другой метод startUpdatingLocation().
+        locationManager.requestLocation()
+
         weatherTableView.register(HourlyTableViewCell.nib(), forCellReuseIdentifier: HourlyTableViewCell.identifier)
     }
     
     @IBAction private func locationButtonPressed(_ sender: UIButton) {
+        locationManager.requestLocation()
     }
 
     @IBAction private func searchButtonPressed(_ sender: UIButton) {
@@ -156,8 +168,24 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+}
 
+extension ViewController: CLLocationManagerDelegate {
 
+    //в симуляторе, чтобы локация работала в нужно пройти в Simulator > Features > Location > Custom Location
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            //останавливаем обновление локации чтобы можно было обновлять локацию через кнопку локации
+            locationManager.stopUpdatingLocation()
+            let lat = location.coordinate.latitude
+            let lon = location.coordinate.longitude
+            weatherManager.fetchWeather(latitude: lat, longitude: lon)
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
 }
 
 
