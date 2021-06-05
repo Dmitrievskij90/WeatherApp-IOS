@@ -16,25 +16,39 @@
                 <rect key="frame" x="0.0" y="0.0" width="486" height="98"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDQ-ck-btg">
-                        <rect key="frame" x="0.0" y="0.0" width="171" height="98"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="mDQ-ck-btg">
+                        <rect key="frame" x="10" y="0.0" width="183" height="98"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_cloudy" translatesAutoresizingMaskIntoConstraints="NO" id="F7b-Jz-e87">
-                        <rect key="frame" x="179" y="0.0" width="138" height="98"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_cloudy" translatesAutoresizingMaskIntoConstraints="NO" id="F7b-Jz-e87">
+                        <rect key="frame" x="193" y="15" width="100" height="68"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="UpI-vY-ghg"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IG4-2e-hrT">
-                        <rect key="frame" x="343" y="0.0" width="143" height="98"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IG4-2e-hrT">
+                        <rect key="frame" x="293" y="0.0" width="193" height="98"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="mDQ-ck-btg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="6jQ-FB-N2n"/>
+                    <constraint firstItem="F7b-Jz-e87" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="AYu-z2-JLY"/>
+                    <constraint firstItem="IG4-2e-hrT" firstAttribute="leading" secondItem="F7b-Jz-e87" secondAttribute="trailing" id="E6s-iJ-EPE"/>
+                    <constraint firstAttribute="bottom" secondItem="F7b-Jz-e87" secondAttribute="bottom" constant="15" id="Fyh-9h-PKY"/>
+                    <constraint firstItem="F7b-Jz-e87" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="HfS-Ot-BLc"/>
+                    <constraint firstItem="F7b-Jz-e87" firstAttribute="leading" secondItem="mDQ-ck-btg" secondAttribute="trailing" id="RAX-qv-tyd"/>
+                    <constraint firstAttribute="bottom" secondItem="mDQ-ck-btg" secondAttribute="bottom" id="UI8-32-unx"/>
+                    <constraint firstItem="mDQ-ck-btg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="bG2-9s-yGL"/>
+                    <constraint firstAttribute="trailing" secondItem="IG4-2e-hrT" secondAttribute="trailing" id="gdp-aG-N6p"/>
+                    <constraint firstAttribute="bottom" secondItem="IG4-2e-hrT" secondAttribute="bottom" id="nGF-J7-oCj"/>
+                    <constraint firstItem="F7b-Jz-e87" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="suj-q8-W7D"/>
+                    <constraint firstItem="IG4-2e-hrT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="zMO-sN-54X"/>
+                </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
