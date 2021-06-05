@@ -36,6 +36,40 @@ class ViewController: UIViewController {
         searchTextField.endEditing(true)
     }
 
+    private func getCurrentDate(_ date: Int) -> String {
+        let unixTimestamp = Double(date)
+        let date = Date(timeIntervalSince1970: unixTimestamp)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = Constants.dateFormat
+        let strDate = dateFormatter.string(from: date)
+        return strDate
+    }
+
+    private func getConditionName(id: Int) -> String {
+        switch id {
+        case 200...232:
+            return Constants.thunderstorm
+        case 300...321:
+            return Constants.drizzle
+        case 500...531:
+            return Constants.rain
+        case 600...622:
+            return Constants.snow
+        case 701...781:
+            return Constants.wind
+        case 800:
+            return Constants.sun
+        case 801...803:
+            return Constants.cloudy
+        case 804:
+            return Constants.clouds
+        default:
+            return Constants.sun
+        }
+    }
+
 }
 
 extension ViewController: UITextFieldDelegate {
