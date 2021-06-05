@@ -23,7 +23,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         weatherManager.delegate = self
         searchTextField.delegate = self
+        weatherTableView.delegate = self
+        weatherTableView.dataSource = self
 
+        weatherTableView.register(HourlyTableViewCell.nib(), forCellReuseIdentifier: HourlyTableViewCell.identifier)
     }
     
     @IBAction private func locationButtonPressed(_ sender: UIButton) {
