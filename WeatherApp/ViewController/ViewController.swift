@@ -5,8 +5,8 @@
 //  Created by Konstantin Dmitrievskiy on 30.05.2021.
 //
 
-import UIKit
 import CoreLocation
+import UIKit
 
 class ViewController: UIViewController {
     private var weatherManager = WeatherManager()
@@ -29,18 +29,12 @@ class ViewController: UIViewController {
         weatherTableView.delegate = self
         weatherTableView.dataSource = self
 
-        //нужно устанавливать раньше requestWhenInUseAuthorization и requestLocation иначе будет ошибка
         locationManager.delegate = self
-
-        //данным способом мы запрашиваем разрешение на отслеживание локации пользователя. Так же в файле info.plist нужно добавить свойство "Privacy When In Use Usage Description" и прописать в валью сообщение
         locationManager.requestWhenInUseAuthorization()
-
-    // так мы получаем локацию пользователя. Чтобы всега обновлять локацию пользователя (к примеру когда он движется на машине или бежит) нужно использовать другой метод startUpdatingLocation().
         locationManager.requestLocation()
 
         weatherTableView.register(HourlyTableViewCell.nib(), forCellReuseIdentifier: HourlyTableViewCell.identifier)
     }
-    
     @IBAction private func locationButtonPressed(_ sender: UIButton) {
         locationManager.requestLocation()
     }
@@ -82,7 +76,6 @@ class ViewController: UIViewController {
             return Constants.sun
         }
     }
-
 }
 
 extension ViewController: UITextFieldDelegate {
@@ -93,7 +86,6 @@ extension ViewController: UITextFieldDelegate {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-
         if let city = searchTextField.text {
             weatherManager.fetchWeather(cityName: city)
         }
@@ -102,7 +94,6 @@ extension ViewController: UITextFieldDelegate {
     }
 
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-
         if textField.text != "" {
             return true
         } else {
@@ -113,14 +104,13 @@ extension ViewController: UITextFieldDelegate {
             return false
         }
     }
-
 }
 
 extension ViewController: WeatherManagerDelegate {
     func didUpdateWeather(weather: WeatherModel) {
         DispatchQueue.main.async {
             self.temperatureLabel.text = weather.temperatureString
-            self.cityLabel.text = weather.cityName
+            self.cityLabel.text = weather.city
             self.descriptionLabel.text = weather.description
             self.temperatureLabel.text = "\(weather.temperatureString)°"
             self.humidityLabel.text = (weather.humidityString)
@@ -132,10 +122,8 @@ extension ViewController: WeatherManagerDelegate {
     }
 
     func didFailWithError(error: Error) {
-        print(error)
+        assert(true, "Can't update weather")
     }
-
-
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -171,11 +159,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension ViewController: CLLocationManagerDelegate {
-
-    //в симуляторе, чтобы локация работала в нужно пройти в Simulator > Features > Location > Custom Location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
-            //останавливаем обновление локации чтобы можно было обновлять локацию через кнопку локации
             locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let lon = location.coordinate.longitude
@@ -184,8 +169,6 @@ extension ViewController: CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error)
+        assert(true, "Can't load location")
     }
 }
-
-

@@ -8,17 +8,17 @@
 import Foundation
 
 struct WeatherModel {
-    let conditionID: Int
-    let cityName: String
-    let temperature: Double
+    let id: Int
+    let city: String
+    let temp: Double
     let date: String
     let humidity: Int
-    let windSpeed: Double
+    let wind: Double
     let description: String
     let weatherList: [List]
 
     var temperatureString: String {
-        return String(format: "%.1f", temperature)
+        return String(format: "%.1f", temp)
     }
 
     var humidityString: String {
@@ -26,11 +26,11 @@ struct WeatherModel {
     }
 
     var windSpeedString: String {
-        return String("Wind: \(windSpeed) m/s")
+        return String("Wind: \(wind) m/s")
     }
 
     var conditionName: String {
-        switch conditionID {
+        switch id {
         case 200...232:
             return Constants.thunderstorm
         case 300...321:
@@ -51,8 +51,4 @@ struct WeatherModel {
             return Constants.sun
         }
     }
-
 }
-
-
-

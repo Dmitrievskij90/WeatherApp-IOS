@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Constants {
+enum Constants {
     static let thunderstorm = "ic_thunderstorm"
     static let drizzle = "ic_drizzle"
     static let rain = "ic_rain"
@@ -18,4 +18,3 @@ struct Constants {
     static let clouds = "ic_clouds"
     static let dateFormat = "EEEE HH:mm"
 }
-

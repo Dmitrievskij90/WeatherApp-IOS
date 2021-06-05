@@ -5,19 +5,17 @@
 //  Created by Konstantin Dmitrievskiy on 30.05.2021.
 //
 
-
-import UIKit
 import CoreLocation
+import UIKit
 
-protocol WeatherManagerDelegate {
+protocol WeatherManagerDelegate: AnyObject {
     func didUpdateWeather(weather: WeatherModel)
 
     func didFailWithError(error: Error)
 }
 
 struct WeatherManager {
-
-    var delegate: WeatherManagerDelegate?
+    weak var delegate: WeatherManagerDelegate?
 
     private let weatherURL = "https://api.openweathermap.org/data/2.5/forecast?appid=3d114828fe6a1721ff802023a7e9cf08&units=metric"
 
@@ -36,13 +34,12 @@ struct WeatherManager {
             if  let url = URL(string: fixedURLString) {
                 let session = URLSession(configuration: .default)
 
-                let task = session.dataTask(with: url) { (data, response, error) in
-                    if error != nil{
+                let task = session.dataTask(with: url) { data, _, error in
+                    if error != nil {
                         print("Can't find data")
                         return
                     }
                     if let safeData = data {
-
                         if let weather = self.parseJSON(safeData) {
                             self.delegate?.didUpdateWeather(weather: weather)
                         }
@@ -67,13 +64,12 @@ struct WeatherManager {
             let description = decodedData.list[0].weather[0].description
             let list = decodedData.list
 
-            let weather = WeatherModel(conditionID: id, cityName: cityName, temperature: temp, date: getCurrentDate(date), humidity: humidity, windSpeed: speed, description: description, weatherList: list)
+            let weather = WeatherModel(id: id, city: cityName, temp: temp, date: getCurrentDate(date), humidity: humidity, wind: speed, description: description, weatherList: list)
             return weather
         } catch {
             delegate?.didFailWithError(error: error)
             return nil
         }
-
     }
 
     private func getCurrentDate(_ date: Int) -> String {

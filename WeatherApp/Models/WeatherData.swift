@@ -7,17 +7,10 @@
 
 import Foundation
 
-struct WeatherData: Codable {
-    let list: [List]
-    let city: City
-
-}
-
 struct List: Codable {
     let main: Main
     let wind: Wind
     let weather: [Weather]
-    let dt_txt: String
     let dt: Int
 }
 
@@ -35,6 +28,11 @@ struct Weather: Codable {
     let description: String
 }
 
-struct City: Codable{
+struct City: Codable {
     let name: String
+}
+
+struct WeatherData: Codable {
+    let list: [List]
+    let city: City
 }
