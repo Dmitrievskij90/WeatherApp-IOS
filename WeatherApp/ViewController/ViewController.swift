@@ -110,7 +110,7 @@ extension ViewController: WeatherManagerDelegate {
             self.temperatureLabel.text = weather.temperatureString
             self.cityLabel.text = weather.cityName
             self.descriptionLabel.text = weather.description
-            self.temperatureLabel.text = weather.temperatureString
+            self.temperatureLabel.text = "\(weather.temperatureString)°"
             self.humidityLabel.text = (weather.humidityString)
             self.windLabel.text = weather.windSpeedString
             self.conditionImageVIew.image = UIImage(named: weather.conditionName)
@@ -137,12 +137,13 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         }
 
         let date = getCurrentDate(dataSourse[indexPath.row].dt)
+        let temperature = String(format: "%.1f", dataSourse[indexPath.row].main.temp)
         guard let image = UIImage(named: getConditionName(id: dataSourse[indexPath.row].weather[0].id)) else {
             assert(false, "Can't find image")
         }
 
         cell.dateLabel.text = date
-        cell.temperatureLabel.text = String(format: "%.1f", dataSourse[indexPath.row].main.temp)
+        cell.temperatureLabel.text = "\(temperature)°"
         cell.conditionImageView.image = image
 
         return cell
