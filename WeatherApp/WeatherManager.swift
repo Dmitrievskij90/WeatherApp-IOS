@@ -77,7 +77,7 @@ struct WeatherManager {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
         dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "EEE HH:mm"
+        dateFormatter.dateFormat = "EEEE HH:mm"
         let strDate = dateFormatter.string(from: date)
         return strDate
     }
