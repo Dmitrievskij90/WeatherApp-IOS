@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     private let disposedBag = DisposeBag()
     private let locationManager = CLLocationManager()
     private var dataSourse = [List]()
+    private lazy var dateFormatter = DateFormatter()
 
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var cityLabel: UILabel!
@@ -73,7 +74,6 @@ class ViewController: UIViewController {
     private func getCurrentDate(_ date: Int) -> String {
         let unixTimestamp = Double(date)
         let date = Date(timeIntervalSince1970: unixTimestamp)
-        let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
         dateFormatter.locale = NSLocale.current
         dateFormatter.dateFormat = Constants.dateFormat
@@ -135,7 +135,7 @@ extension ViewController: UITextFieldDelegate {
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        dataSourse.count
+        return dataSourse.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
