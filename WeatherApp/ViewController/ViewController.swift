@@ -6,10 +6,13 @@
 //
 
 import CoreLocation
+import RxRelay
+import RxSwift
 import UIKit
 
 class ViewController: UIViewController {
-    private var weatherManager = WeatherManager()
+    private let weatherManager = WeatherManager()
+    private let disposedBag = DisposeBag()
     private let locationManager = CLLocationManager()
     private var dataSourse = [List]()
 
@@ -24,7 +27,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        weatherManager.delegate = self
         searchTextField.delegate = self
         weatherTableView.delegate = self
         weatherTableView.dataSource = self
@@ -35,12 +37,37 @@ class ViewController: UIViewController {
 
         weatherTableView.register(HourlyTableViewCell.nib(), forCellReuseIdentifier: HourlyTableViewCell.identifier)
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateWeather()
+    }
+
     @IBAction private func locationButtonPressed(_ sender: UIButton) {
         locationManager.requestLocation()
     }
 
     @IBAction private func searchButtonPressed(_ sender: UIButton) {
         searchTextField.endEditing(true)
+    }
+
+    private func updateWeather() {
+        weatherManager.forecast.subscribe { value in
+            DispatchQueue.main.async {
+                if let weather = value.element {
+                    self.temperatureLabel.text = weather.temperatureString
+                    self.cityLabel.text = weather.city
+                    self.descriptionLabel.text = weather.description
+                    self.temperatureLabel.text = "\(weather.temperatureString)°"
+                    self.humidityLabel.text = (weather.humidityString)
+                    self.windLabel.text = weather.windSpeedString
+                    self.conditionImageVIew.image = UIImage(named: weather.conditionName)
+                    self.dataSourse = weather.weatherList
+                    self.weatherTableView.reloadData()
+                }
+            }
+        }
+        .disposed(by: disposedBag)
     }
 
     private func getCurrentDate(_ date: Int) -> String {
