@@ -8,14 +8,7 @@
 import CoreLocation
 import UIKit
 
-protocol WeatherManagerDelegate: AnyObject {
-    func didUpdateWeather(weather: WeatherModel)
-
-    func didFailWithError(error: Error)
-}
-
 struct WeatherManager {
-    weak var delegate: WeatherManagerDelegate?
 
     private let weatherURL = "https://api.openweathermap.org/data/2.5/forecast?appid=3d114828fe6a1721ff802023a7e9cf08&units=metric"
 
