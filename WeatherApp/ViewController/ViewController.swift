@@ -106,26 +106,6 @@ extension ViewController: UITextFieldDelegate {
     }
 }
 
-extension ViewController: WeatherManagerDelegate {
-    func didUpdateWeather(weather: WeatherModel) {
-        DispatchQueue.main.async {
-            self.temperatureLabel.text = weather.temperatureString
-            self.cityLabel.text = weather.city
-            self.descriptionLabel.text = weather.description
-            self.temperatureLabel.text = "\(weather.temperatureString)°"
-            self.humidityLabel.text = (weather.humidityString)
-            self.windLabel.text = weather.windSpeedString
-            self.conditionImageVIew.image = UIImage(named: weather.conditionName)
-            self.dataSourse = weather.weatherList
-            self.weatherTableView.reloadData()
-        }
-    }
-
-    func didFailWithError(error: Error) {
-        assert(true, "Can't update weather")
-    }
-}
-
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         dataSourse.count
