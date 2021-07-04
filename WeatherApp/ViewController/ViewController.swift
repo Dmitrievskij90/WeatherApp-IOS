@@ -68,7 +68,7 @@ class ViewController: UIViewController {
                     self.temperatureLabel.text = "\(weather.temperatureString)°"
                     self.humidityLabel.text = (weather.humidityString)
                     self.windLabel.text = weather.windSpeedString
-                    self.conditionImageVIew.image = UIImage(named: weather.conditionName)
+                    self.conditionImageVIew.image = UIImage(named: weather.currentConditionName)
                     self.dataSourse = weather.weatherList
                     self.weatherTableView.reloadData()
                 }
@@ -85,29 +85,6 @@ class ViewController: UIViewController {
         dateFormatter.dateFormat = Constants.dateFormat
         let strDate = dateFormatter.string(from: date)
         return strDate
-    }
-
-    private func getConditionName(id: Int) -> String {
-        switch id {
-        case 200...232:
-            return Constants.thunderstorm
-        case 300...321:
-            return Constants.drizzle
-        case 500...531:
-            return Constants.rain
-        case 600...622:
-            return Constants.snow
-        case 701...781:
-            return Constants.wind
-        case 800:
-            return Constants.sun
-        case 801...803:
-            return Constants.cloudy
-        case 804:
-            return Constants.clouds
-        default:
-            return Constants.sun
-        }
     }
 }
 
@@ -155,7 +132,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 
         let date = getCurrentDate(dataSourse[indexPath.row].dt)
         let temperature = String(format: "%.1f", dataSourse[indexPath.row].main.temp)
-        guard let image = UIImage(named: getConditionName(id: dataSourse[indexPath.row].weather[0].id)) else {
+
+        guard let image = UIImage(named: WeatherModel.getHourlyConditionName(id: dataSourse[indexPath.row].weather[0].id)) else {
             assert(false, "Can't find image")
         }
 

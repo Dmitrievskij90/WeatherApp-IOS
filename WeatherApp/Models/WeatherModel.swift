@@ -29,7 +29,30 @@ struct WeatherModel {
         return String("Wind: \(wind) m/s")
     }
 
-    var conditionName: String {
+    var currentConditionName: String {
+        switch id {
+        case 200...232:
+            return Constants.thunderstorm
+        case 300...321:
+            return Constants.drizzle
+        case 500...531:
+            return Constants.rain
+        case 600...622:
+            return Constants.snow
+        case 701...781:
+            return Constants.wind
+        case 800:
+            return Constants.sun
+        case 801...803:
+            return Constants.cloudy
+        case 804:
+            return Constants.clouds
+        default:
+            return Constants.sun
+        }
+    }
+
+    static func getHourlyConditionName(id: Int) -> String {
         switch id {
         case 200...232:
             return Constants.thunderstorm
