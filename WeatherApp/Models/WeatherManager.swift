@@ -54,27 +54,16 @@ struct WeatherManager {
             let cityName = decodedData.city.name
             let humidity = decodedData.list[0].main.humidity
             let speed = decodedData.list[0].wind.speed
-            let date = decodedData.list[0].dt
+            let date = String(decodedData.list[0].dt)
             let id = decodedData.list[0].weather[0].id
             let description = decodedData.list[0].weather[0].description
             let list = decodedData.list
 
-            let weather = WeatherModel(id: id, city: cityName, temp: temp, date: getCurrentDate(date), humidity: humidity, wind: speed, description: description, weatherList: list)
+            let weather = WeatherModel(id: id, city: cityName, temp: temp, date: date, humidity: humidity, wind: speed, description: description, weatherList: list)
             return weather
         } catch {
             assert(true, "Can't load data")
             return nil
         }
-    }
-
-    private func getCurrentDate(_ date: Int) -> String {
-        let unixTimestamp = Double(date)
-        let date = Date(timeIntervalSince1970: unixTimestamp)
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
-        dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "EEEE HH:mm"
-        let strDate = dateFormatter.string(from: date)
-        return strDate
     }
 }
