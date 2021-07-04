@@ -6,10 +6,12 @@
 //
 
 import CoreLocation
+import RxRelay
+import RxSwift
 import UIKit
 
 struct WeatherManager {
-
+    var forecast = PublishRelay<WeatherModel>()
     private let weatherURL = "https://api.openweathermap.org/data/2.5/forecast?appid=3d114828fe6a1721ff802023a7e9cf08&units=metric"
 
     func fetchWeather(cityName: String) {
@@ -34,7 +36,7 @@ struct WeatherManager {
                     }
                     if let safeData = data {
                         if let weather = self.parseJSON(safeData) {
-                            self.delegate?.didUpdateWeather(weather: weather)
+                            forecast.accept(weather)
                         }
                     }
                 }
@@ -60,7 +62,7 @@ struct WeatherManager {
             let weather = WeatherModel(id: id, city: cityName, temp: temp, date: getCurrentDate(date), humidity: humidity, wind: speed, description: description, weatherList: list)
             return weather
         } catch {
-            delegate?.didFailWithError(error: error)
+            assert(true, "Can't load data")
             return nil
         }
     }
