@@ -26,6 +26,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var conditionImageVIew: UIImageView!
     @IBOutlet weak var weatherTableView: UITableView!
 
+    // MARK: - Lifecycle methods
+    // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
         searchTextField.delegate = self
@@ -44,6 +46,8 @@ class ViewController: UIViewController {
         updateWeather()
     }
 
+    // MARK: - Action methods
+    // MARK: -
     @IBAction private func locationButtonPressed(_ sender: UIButton) {
         locationManager.requestLocation()
     }
@@ -52,6 +56,8 @@ class ViewController: UIViewController {
         searchTextField.endEditing(true)
     }
 
+    // MARK: - Update UI methods
+    // MARK: -
     private func updateWeather() {
         weatherManager.forecast.subscribe { value in
             DispatchQueue.main.async {
@@ -105,6 +111,8 @@ class ViewController: UIViewController {
     }
 }
 
+// MARK: - UITextFieldDelegate methods
+// MARK: -
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchTextField.endEditing(true)
@@ -133,6 +141,8 @@ extension ViewController: UITextFieldDelegate {
     }
 }
 
+// MARK: - UITableViewDelegate, UITableViewDataSource methods
+// MARK: -
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSourse.count
@@ -165,6 +175,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - CLLocationManagerDelegate methods
+// MARK: -
 extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
