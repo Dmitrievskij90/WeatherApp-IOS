@@ -59,8 +59,8 @@ class ViewController: UIViewController {
     // MARK: - Update UI methods
     // MARK: -
     private func updateWeather() {
-        weatherManager.forecast.subscribe { value in
-            DispatchQueue.main.async {
+        weatherManager.forecast.observe(on: MainScheduler.instance)
+            .subscribe { value in
                 if let weather = value.element {
                     self.temperatureLabel.text = weather.temperatureString
                     self.cityLabel.text = weather.city
@@ -73,8 +73,7 @@ class ViewController: UIViewController {
                     self.weatherTableView.reloadData()
                 }
             }
-        }
-        .disposed(by: disposedBag)
+            .disposed(by: disposedBag)
     }
 
     private func getCurrentDate(_ date: Int) -> String {
