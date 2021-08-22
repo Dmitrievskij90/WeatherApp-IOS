@@ -6,17 +6,12 @@
 //
 
 import CoreLocation
+import RxRelay
+import RxSwift
 import UIKit
 
-protocol WeatherManagerDelegate: AnyObject {
-    func didUpdateWeather(weather: WeatherModel)
-
-    func didFailWithError(error: Error)
-}
-
 struct WeatherManager {
-    weak var delegate: WeatherManagerDelegate?
-
+    var forecast = PublishRelay<WeatherModel>()
     private let weatherURL = "https://api.openweathermap.org/data/2.5/forecast?appid=3d114828fe6a1721ff802023a7e9cf08&units=metric"
 
     func fetchWeather(cityName: String) {
@@ -41,7 +36,7 @@ struct WeatherManager {
                     }
                     if let safeData = data {
                         if let weather = self.parseJSON(safeData) {
-                            self.delegate?.didUpdateWeather(weather: weather)
+                            forecast.accept(weather)
                         }
                     }
                 }
@@ -59,27 +54,16 @@ struct WeatherManager {
             let cityName = decodedData.city.name
             let humidity = decodedData.list[0].main.humidity
             let speed = decodedData.list[0].wind.speed
-            let date = decodedData.list[0].dt
+            let date = String(decodedData.list[0].dt)
             let id = decodedData.list[0].weather[0].id
             let description = decodedData.list[0].weather[0].description
             let list = decodedData.list
 
-            let weather = WeatherModel(id: id, city: cityName, temp: temp, date: getCurrentDate(date), humidity: humidity, wind: speed, description: description, weatherList: list)
+            let weather = WeatherModel(id: id, city: cityName, temp: temp, date: date, humidity: humidity, wind: speed, description: description, weatherList: list)
             return weather
         } catch {
-            delegate?.didFailWithError(error: error)
+            assert(true, "Can't load data")
             return nil
         }
-    }
-
-    private func getCurrentDate(_ date: Int) -> String {
-        let unixTimestamp = Double(date)
-        let date = Date(timeIntervalSince1970: unixTimestamp)
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
-        dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "EEEE HH:mm"
-        let strDate = dateFormatter.string(from: date)
-        return strDate
     }
 }

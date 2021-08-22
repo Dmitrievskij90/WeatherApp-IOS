@@ -6,12 +6,16 @@
 //
 
 import CoreLocation
+import RxRelay
+import RxSwift
 import UIKit
 
 class ViewController: UIViewController {
-    private var weatherManager = WeatherManager()
+    private let weatherManager = WeatherManager()
+    private let disposedBag = DisposeBag()
     private let locationManager = CLLocationManager()
     private var dataSourse = [List]()
+    private lazy var dateFormatter = DateFormatter()
 
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var cityLabel: UILabel!
@@ -22,9 +26,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var conditionImageVIew: UIImageView!
     @IBOutlet weak var weatherTableView: UITableView!
 
+    // MARK: - Lifecycle methods
+    // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
-        weatherManager.delegate = self
         searchTextField.delegate = self
         weatherTableView.delegate = self
         weatherTableView.dataSource = self
@@ -35,6 +40,14 @@ class ViewController: UIViewController {
 
         weatherTableView.register(HourlyTableViewCell.nib(), forCellReuseIdentifier: HourlyTableViewCell.identifier)
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateWeather()
+    }
+
+    // MARK: - Action methods
+    // MARK: -
     @IBAction private func locationButtonPressed(_ sender: UIButton) {
         locationManager.requestLocation()
     }
@@ -43,41 +56,39 @@ class ViewController: UIViewController {
         searchTextField.endEditing(true)
     }
 
+    // MARK: - Update UI methods
+    // MARK: -
+    private func updateWeather() {
+        weatherManager.forecast.observe(on: MainScheduler.instance)
+            .subscribe { value in
+                if let weather = value.element {
+                    self.temperatureLabel.text = weather.temperatureString
+                    self.cityLabel.text = weather.city
+                    self.descriptionLabel.text = weather.description
+                    self.temperatureLabel.text = "\(weather.temperatureString)°"
+                    self.humidityLabel.text = (weather.humidityString)
+                    self.windLabel.text = weather.windSpeedString
+                    self.conditionImageVIew.image = UIImage(named: weather.currentConditionName)
+                    self.dataSourse = weather.weatherList
+                    self.weatherTableView.reloadData()
+                }
+            }
+            .disposed(by: disposedBag)
+    }
+
     private func getCurrentDate(_ date: Int) -> String {
         let unixTimestamp = Double(date)
         let date = Date(timeIntervalSince1970: unixTimestamp)
-        let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
         dateFormatter.locale = NSLocale.current
         dateFormatter.dateFormat = Constants.dateFormat
         let strDate = dateFormatter.string(from: date)
         return strDate
     }
-
-    private func getConditionName(id: Int) -> String {
-        switch id {
-        case 200...232:
-            return Constants.thunderstorm
-        case 300...321:
-            return Constants.drizzle
-        case 500...531:
-            return Constants.rain
-        case 600...622:
-            return Constants.snow
-        case 701...781:
-            return Constants.wind
-        case 800:
-            return Constants.sun
-        case 801...803:
-            return Constants.cloudy
-        case 804:
-            return Constants.clouds
-        default:
-            return Constants.sun
-        }
-    }
 }
 
+// MARK: - UITextFieldDelegate methods
+// MARK: -
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchTextField.endEditing(true)
@@ -106,29 +117,11 @@ extension ViewController: UITextFieldDelegate {
     }
 }
 
-extension ViewController: WeatherManagerDelegate {
-    func didUpdateWeather(weather: WeatherModel) {
-        DispatchQueue.main.async {
-            self.temperatureLabel.text = weather.temperatureString
-            self.cityLabel.text = weather.city
-            self.descriptionLabel.text = weather.description
-            self.temperatureLabel.text = "\(weather.temperatureString)°"
-            self.humidityLabel.text = (weather.humidityString)
-            self.windLabel.text = weather.windSpeedString
-            self.conditionImageVIew.image = UIImage(named: weather.conditionName)
-            self.dataSourse = weather.weatherList
-            self.weatherTableView.reloadData()
-        }
-    }
-
-    func didFailWithError(error: Error) {
-        assert(true, "Can't update weather")
-    }
-}
-
+// MARK: - UITableViewDelegate, UITableViewDataSource methods
+// MARK: -
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        dataSourse.count
+        return dataSourse.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -138,7 +131,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 
         let date = getCurrentDate(dataSourse[indexPath.row].dt)
         let temperature = String(format: "%.1f", dataSourse[indexPath.row].main.temp)
-        guard let image = UIImage(named: getConditionName(id: dataSourse[indexPath.row].weather[0].id)) else {
+
+        guard let image = UIImage(named: WeatherModel.getHourlyConditionName(id: dataSourse[indexPath.row].weather[0].id)) else {
             assert(false, "Can't find image")
         }
 
@@ -158,6 +152,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - CLLocationManagerDelegate methods
+// MARK: -
 extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
