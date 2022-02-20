@@ -131,7 +131,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return view.frame.height / 15
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
