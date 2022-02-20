@@ -24,7 +24,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var windLabel: UILabel!
     @IBOutlet weak var conditionImageVIew: UIImageView!
     @IBOutlet weak var weatherTableView: UITableView!
-
+    @IBOutlet weak var hView: UIView!
+    @IBOutlet weak var headerLabel: UILabel!
     // MARK: - Lifecycle methods
     // MARK: -
     override func viewDidLoad() {
@@ -38,13 +39,15 @@ class ViewController: UIViewController {
         locationManager.requestLocation()
 
         weatherTableView.register(HourlyTableViewCell.nib(), forCellReuseIdentifier: HourlyTableViewCell.identifier)
+
+        weatherTableView.layer.cornerRadius = 15
+        weatherTableView.clipsToBounds = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateWeather()
     }
-
     // MARK: - Action methods
     // MARK: -
     @IBAction private func locationButtonPressed(_ sender: UIButton) {
