@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     private let locationManager = CLLocationManager()
     private var dataSourse = [List]()
 
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -42,6 +43,9 @@ class ViewController: UIViewController {
 
         weatherTableView.layer.cornerRadius = 15
         weatherTableView.clipsToBounds = true
+
+        containerView.layer.cornerRadius = 15
+        containerView.clipsToBounds = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
