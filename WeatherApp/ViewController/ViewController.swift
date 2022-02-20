@@ -15,8 +15,8 @@ class ViewController: UIViewController {
     private let disposedBag = DisposeBag()
     private let locationManager = CLLocationManager()
     private var dataSourse = [List]()
-    private lazy var dateFormatter = DateFormatter()
 
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -25,7 +25,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var windLabel: UILabel!
     @IBOutlet weak var conditionImageVIew: UIImageView!
     @IBOutlet weak var weatherTableView: UITableView!
-
+    @IBOutlet weak var hView: UIView!
+    @IBOutlet weak var headerLabel: UILabel!
     // MARK: - Lifecycle methods
     // MARK: -
     override func viewDidLoad() {
@@ -39,13 +40,18 @@ class ViewController: UIViewController {
         locationManager.requestLocation()
 
         weatherTableView.register(HourlyTableViewCell.nib(), forCellReuseIdentifier: HourlyTableViewCell.identifier)
+
+        weatherTableView.layer.cornerRadius = 15
+        weatherTableView.clipsToBounds = true
+
+        containerView.layer.cornerRadius = 15
+        containerView.clipsToBounds = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateWeather()
     }
-
     // MARK: - Action methods
     // MARK: -
     @IBAction private func locationButtonPressed(_ sender: UIButton) {
@@ -74,16 +80,6 @@ class ViewController: UIViewController {
                 }
             }
             .disposed(by: disposedBag)
-    }
-
-    private func getCurrentDate(_ date: Int) -> String {
-        let unixTimestamp = Double(date)
-        let date = Date(timeIntervalSince1970: unixTimestamp)
-        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
-        dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = Constants.dateFormat
-        let strDate = dateFormatter.string(from: date)
-        return strDate
     }
 }
 
@@ -129,22 +125,13 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
 
-        let date = getCurrentDate(dataSourse[indexPath.row].dt)
-        let temperature = String(format: "%.1f", dataSourse[indexPath.row].main.temp)
-
-        guard let image = UIImage(named: WeatherModel.getHourlyConditionName(id: dataSourse[indexPath.row].weather[0].id)) else {
-            assert(false, "Can't find image")
-        }
-
-        cell.dateLabel.text = date
-        cell.temperatureLabel.text = "\(temperature)°"
-        cell.conditionImageView.image = image
-
+        let data = dataSourse[indexPath.row]
+        cell.data = data
         return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return view.frame.height / 15
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
