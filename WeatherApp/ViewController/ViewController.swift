@@ -15,7 +15,6 @@ class ViewController: UIViewController {
     private let disposedBag = DisposeBag()
     private let locationManager = CLLocationManager()
     private var dataSourse = [List]()
-    private lazy var dateFormatter = DateFormatter()
 
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var cityLabel: UILabel!
@@ -75,16 +74,6 @@ class ViewController: UIViewController {
             }
             .disposed(by: disposedBag)
     }
-
-    private func getCurrentDate(_ date: Int) -> String {
-        let unixTimestamp = Double(date)
-        let date = Date(timeIntervalSince1970: unixTimestamp)
-        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
-        dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = Constants.dateFormat
-        let strDate = dateFormatter.string(from: date)
-        return strDate
-    }
 }
 
 // MARK: - UITextFieldDelegate methods
@@ -129,17 +118,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
 
-        let date = getCurrentDate(dataSourse[indexPath.row].dt)
-        let temperature = String(format: "%.1f", dataSourse[indexPath.row].main.temp)
-
-        guard let image = UIImage(named: WeatherModel.getHourlyConditionName(id: dataSourse[indexPath.row].weather[0].id)) else {
-            assert(false, "Can't find image")
-        }
-
-        cell.dateLabel.text = date
-        cell.temperatureLabel.text = "\(temperature)°"
-        cell.conditionImageView.image = image
-
+        let data = dataSourse[indexPath.row]
+        cell.data = data
         return cell
     }
 
